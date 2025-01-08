@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Feature request. If this doesn't look right, choose a different type.
+about: Feature request.
 title: ''
 labels: ''
 assignees: ''

@@ -1,1 +1,1 @@
-# MISE
+# MISE (Movie Information Search Engine)

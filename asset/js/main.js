@@ -5,7 +5,10 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 
 const $test = document.querySelector("#test");
 const $movieGrid = document.querySelector("#movieGrid");
-
+// const $movieContent = document.querySelector(".movieContent");
+// const $movieName = document.querySelector("#movieName");
+// const $img = document.querySelector("#img");
+// const $overview = document.querySelector("#overview")
 
 
 function getNowPlaying() {
@@ -45,41 +48,97 @@ async function getPopular() {
     let movieList = res['results'];
     movieList.forEach(movie => {
 
-        let movieName = movie.title;
-        let poster = POSTER_URL + movie.poster_path;
-        let scoreAver = movie.vote_average;
-        let releaseDate = movie.release_date;
-        let overview = movie.overview;
+        childElement = movieCard(movie);
 
-        let html = `
-            <div>
-                <h1>${movieName}</h1>
-                <div>
-                    <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
-                </div>
-                <div id="bookmarkbtn">
-                    <p>
-                        ${overview}
-                    </p>
-                    ${releaseDate}
-                    ${scoreAver}
-                </div>
-            </div>
-        `;
-
-        const tempElement = document.createElement('div');
-        tempElement.innerHTML = html;
-        const childElement = tempElement.firstElementChild;
-
-        // 변환한 DOM 요소를 $movieGrid에 추가
         if ($movieGrid) {
             $movieGrid.appendChild(childElement);
+
         } else {
-            console.error('$movieGrid 요소를 찾을 수 없습니다.');
+            console.error('html 문서오류');
         }
 
-    })
+    });
+
+
+
     console.log(movieList);
+}
+
+
+
+function movieCard(movie) {
+    let movieName = movie.title;
+    let poster = POSTER_URL + movie.poster_path;
+    let scoreAver = movie.vote_average;
+    let id = movie.id;
+
+    
+
+    let html = `
+        <div id=${id}>
+            <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
+            <h3>${movieName}</h3>
+            ${scoreAver}
+        </div>
+    `;
+
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    const childElement = tempElement.firstElementChild;
+
+    childElement.addEventListener("click", function (e) {
+        e.preventDefault();
+        openMovieContent(movie);
+    });
+
+    return childElement;
+
+}
+
+function movieContent(movie) {
+    let movieName = movie.title;
+    let poster = POSTER_URL + movie.poster_path;
+    let scoreAver = movie.vote_average;
+    let releaseDate = movie.release_date;
+    let overview = movie.overview;
+
+    let html = `
+        <dialog id="movieModal">
+            <h1>${movieName}</h1>
+            <div>
+                <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
+            </div>
+            <div id="bookmarkbtn">
+                <p>
+                    ${overview}
+                </p>
+                ${releaseDate}
+                <br>
+                ${scoreAver}
+            </div>
+            <button id="closeModal">닫기</button>
+        </dialog>
+    `;
+
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    const modalElement = tempElement.firstElementChild;
+
+    document.body.appendChild(modalElement);
+   
+    const dialog = document.querySelector("#movieModal");
+    dialog.showModal();
+
+    const closeButton = document.querySelector("#closeModal");
+    closeButton.addEventListener("click", () => {
+        dialog.close(); 
+        dialog.remove(); 
+    });
+}
+
+function openMovieContent(movie) {
+    movieContent(movie);
+    console.log(modal);
 }
 
 

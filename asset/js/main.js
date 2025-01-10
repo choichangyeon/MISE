@@ -4,7 +4,7 @@ const API_URL = "https://api.themoviedb.org/3/movie";
 const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 
 const $test = document.querySelector("#test");
-const $movieGrid = document.querySelector("#movieGrid");
+const $movieFlex = document.querySelector("#movie-flex");
 // const $movieContent = document.querySelector(".movieContent");
 // const $movieName = document.querySelector("#movieName");
 // const $img = document.querySelector("#img");
@@ -50,8 +50,8 @@ async function getPopular() {
 
         childElement = movieCard(movie);
 
-        if ($movieGrid) {
-            $movieGrid.appendChild(childElement);
+        if ($movieFlex) {
+            $movieFlex.appendChild(childElement);
 
         } else {
             console.error('html 문서오류');
@@ -72,10 +72,8 @@ function movieCard(movie) {
     let scoreAver = movie.vote_average;
     let id = movie.id;
 
-    
-
     let html = `
-        <div id=${id}>
+        <div class='movie-card' id=${id}> 
             <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
             <h3>${movieName}</h3>
             ${scoreAver}
@@ -103,7 +101,7 @@ function movieContent(movie) {
     let overview = movie.overview;
 
     let html = `
-        <dialog id="movieModal">
+        <dialog id="movie-modal">
             <h1>${movieName}</h1>
             <div>
                 <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
@@ -116,7 +114,7 @@ function movieContent(movie) {
                 <br>
                 ${scoreAver}
             </div>
-            <button id="closeModal">닫기</button>
+            <button id="close-modal">닫기</button>
         </dialog>
     `;
 
@@ -126,10 +124,10 @@ function movieContent(movie) {
 
     document.body.appendChild(modalElement);
    
-    const dialog = document.querySelector("#movieModal");
+    const dialog = document.querySelector("#movie-modal");
     dialog.showModal();
 
-    const closeButton = document.querySelector("#closeModal");
+    const closeButton = document.querySelector("#close-modal");
     closeButton.addEventListener("click", () => {
         dialog.close(); 
         dialog.remove(); 
@@ -138,7 +136,6 @@ function movieContent(movie) {
 
 function openMovieContent(movie) {
     movieContent(movie);
-    console.log(modal);
 }
 
 

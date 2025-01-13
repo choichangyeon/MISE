@@ -1,9 +1,11 @@
 const $search = document.querySelector("#search");
 
 $search.addEventListener("input", debounce(function (e) {
-    console.log(e.target.value);
-    if(e.target.value !== null){
+    if(e.target.value !== ""){
         searchMoive(e.target.value);
+    }
+    else{
+        getPopular();
     }
 }, 200));
 
@@ -38,10 +40,10 @@ async function searchMoive(word) {
         console.error(err);
     }
 
-    console.log(res);
+    // console.log(res);
 
-    let movieList = res['results'];
-    appendFlex(movieList);
+    movieList = res['results'];
+    appendFlex();
 
 }
 

@@ -1,6 +1,3 @@
-
-
-
 function getNowPlaying() {
     const options = {
         method: 'GET',
@@ -35,14 +32,11 @@ async function getPopular() {
         console.error(err);
     }
 
-    console.log(res);
-
-    let movieList = res['results'];
+    movieList = res['results'];
 
     appendFlex(movieList);
-
-    console.log(movieList);
 }
 
 // getNowPlaying();
+
 getPopular();

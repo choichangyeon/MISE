@@ -5,12 +5,13 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 
 const $movieFlex = document.querySelector("#movie-flex");
 
-function appendFlex(movieList) {
+let movieList = [];
+
+function appendFlex() {
+    $movieFlex.innerHTML = "";
     movieList.forEach(movie => {
 
         let childElement = movieCard(movie);
-        console.log(childElement);
-        console.log($movieFlex);
         try {
             $movieFlex.appendChild(childElement);
         }

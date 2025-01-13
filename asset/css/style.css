@@ -3,6 +3,19 @@
     padding: 0 40px 0 40px;
 }
 
+#search {
+    justify-self: center;
+    /* background-color: green; */
+}
+
+#search > input{
+    width: 500px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 30px;
+    /* background-color: grey; */
+}
+
 #movie-flex{
     display: flex;
     flex-flow: row wrap;

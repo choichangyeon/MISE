@@ -1,4 +1,5 @@
 const $search = document.querySelector("#search");
+const $bookmark = document.querySelector("#bookmark");
 
 $search.addEventListener("input", debounce(function (e) {
     if(e.target.value !== ""){
@@ -8,6 +9,10 @@ $search.addEventListener("input", debounce(function (e) {
         getPopular();
     }
 }, 200));
+
+$bookmark.addEventListener("click", function(e){
+    alert("click");
+});
 
 function debounce(func, delay) {
     let timer;

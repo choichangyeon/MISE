@@ -6,7 +6,7 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 const $movieFlex = document.querySelector("#movie-flex");
 
 let movieList = [];
-// let bookmarkList = [];
+let bookmarkList = [];
 
 function appendFlex() {
     $movieFlex.innerHTML = "";
@@ -61,7 +61,7 @@ function movieContent(movie) {
             <div>
                 <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
             </div>
-            <div id="bookmarkbtn">
+            <div>
                 <p>
                     ${overview}
                 </p>
@@ -90,17 +90,17 @@ function movieContent(movie) {
 
     const $bookmarkbtn = document.querySelector("#bookmarkbtn");
     $bookmarkbtn.addEventListener("click", () => {
-        alert("click");
-        const movieValue = JSON.stringify(movie);
-        const movieId = JSON.stringify(movie.id);
-        // console.log(movieId);
-        window.localStorage.setItem(movieId, movieValue);
-    });
-    
-    const $test = document.querySelector("#test");
-    $test.addEventListener("click", () => {
-        const id = window.localStorage.getItem();
-        alert(id);
+        if(!bookmarkList.some((Movie) => Movie.id === movie.id)){
+            bookmarkList.push(movie);
+            alert("북마크 추가 완료!")
+        }
+        else{
+            alert("이미 북마크에 포함되어있습니다!");
+        }
+        const movieList = JSON.stringify(bookmarkList);
+
+
+        window.localStorage.setItem("movie", movieList);
     });
 }
 

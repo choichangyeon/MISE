@@ -16,6 +16,10 @@
     /* background-color: grey; */
 }
 
+#bookmark {
+    text-align: center;
+}
+
 #movie-flex{
     display: flex;
     flex-flow: row wrap;

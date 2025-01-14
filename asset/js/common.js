@@ -6,6 +6,7 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 const $movieFlex = document.querySelector("#movie-flex");
 
 let movieList = [];
+// let bookmarkList = [];
 
 function appendFlex() {
     $movieFlex.innerHTML = "";
@@ -36,9 +37,7 @@ function movieCard(movie) {
         </div>
     `;
 
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = html;
-    const childElement = tempElement.firstElementChild;
+    const childElement = makeDiv(html);
 
     childElement.addEventListener("click", function (e) {
         e.preventDefault();
@@ -70,26 +69,49 @@ function movieContent(movie) {
                 <br>
                 ${scoreAver}
             </div>
+            <button id="bookmarkbtn">북마크 저장</button>
+            <button id="test">확인해보기</button>
             <button id="close-modal">닫기</button>
         </dialog>
     `;
 
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = html;
-    const modalElement = tempElement.firstElementChild;
+    const childElement = makeDiv(html);
 
-    document.body.appendChild(modalElement);
+    document.body.appendChild(childElement);
 
-    const dialog = document.querySelector("#movie-modal");
-    dialog.showModal();
+    const $dialog = document.querySelector("#movie-modal");
+    $dialog.showModal();
 
-    const closeButton = document.querySelector("#close-modal");
-    closeButton.addEventListener("click", () => {
-        dialog.close();
-        dialog.remove();
+    const $closeButton = document.querySelector("#close-modal");
+    $closeButton.addEventListener("click", () => {
+        $dialog.close();
+        $dialog.remove();
+    });
+
+    const $bookmarkbtn = document.querySelector("#bookmarkbtn");
+    $bookmarkbtn.addEventListener("click", () => {
+        alert("click");
+        const movieValue = JSON.stringify(movie);
+        const movieId = JSON.stringify(movie.id);
+        // console.log(movieId);
+        window.localStorage.setItem(movieId, movieValue);
+    });
+    
+    const $test = document.querySelector("#test");
+    $test.addEventListener("click", () => {
+        const id = window.localStorage.getItem();
+        alert(id);
     });
 }
 
 function openMovieContent(movie) {
     movieContent(movie);
+}
+
+function makeDiv(html){
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    const childElement = tempElement.firstElementChild;
+
+    return childElement;
 }

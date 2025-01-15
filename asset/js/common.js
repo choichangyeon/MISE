@@ -8,6 +8,7 @@ const $search = document.querySelector(".search");
 const $movieFlex = document.querySelector("#movie-flex");
 const $banner = document.querySelector("#banner");
 const $bookmark = document.querySelector("#bookmark");
+const $upcoming = document.querySelector('#upcoming');
 
 let movieList = [];
 

@@ -6,7 +6,6 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 const $movieFlex = document.querySelector("#movie-flex");
 
 let movieList = [];
-
 let checkList = window.localStorage.getItem("movie");
 let bookmarkList = JSON.parse(checkList);
 

@@ -34,9 +34,7 @@ async function getPopular() {
 
     movieList = res['results'];
 
-    appendFlex(movieList);
+    appendFlex();
 }
-
-// getNowPlaying();
 
 getPopular();

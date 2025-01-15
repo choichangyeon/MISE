@@ -11,7 +11,8 @@ $search.addEventListener("input", debounce(function (e) {
 }, 200));
 
 $bookmark.addEventListener("click", function(e){
-    
+    movieList = bookmarkList;
+    appendFlex();
 });
 
 function debounce(func, delay) {

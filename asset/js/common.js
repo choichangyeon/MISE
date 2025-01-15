@@ -6,7 +6,9 @@ const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 const $movieFlex = document.querySelector("#movie-flex");
 
 let movieList = [];
-let bookmarkList = [];
+
+let checkList = window.localStorage.getItem("movie");
+let bookmarkList = JSON.parse(checkList);
 
 function appendFlex() {
     $movieFlex.innerHTML = "";
@@ -70,7 +72,6 @@ function movieContent(movie) {
                 ${scoreAver}
             </div>
             <button id="bookmarkbtn">북마크 저장</button>
-            <button id="test">확인해보기</button>
             <button id="close-modal">닫기</button>
         </dialog>
     `;
@@ -90,16 +91,15 @@ function movieContent(movie) {
 
     const $bookmarkbtn = document.querySelector("#bookmarkbtn");
     $bookmarkbtn.addEventListener("click", () => {
-        if(!bookmarkList.some((Movie) => Movie.id === movie.id)){
+
+        if (!bookmarkList.some((Movie) => Movie.id === movie.id)) {
             bookmarkList.push(movie);
             alert("북마크 추가 완료!")
         }
-        else{
+        else {
             alert("이미 북마크에 포함되어있습니다!");
         }
         const movieList = JSON.stringify(bookmarkList);
-
-
         window.localStorage.setItem("movie", movieList);
     });
 }
@@ -108,7 +108,7 @@ function openMovieContent(movie) {
     movieContent(movie);
 }
 
-function makeDiv(html){
+function makeDiv(html) {
     const tempElement = document.createElement('div');
     tempElement.innerHTML = html;
     const childElement = tempElement.firstElementChild;

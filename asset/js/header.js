@@ -11,7 +11,7 @@ $search.addEventListener("input", debounce(function (e) {
 }, 200));
 
 $bookmark.addEventListener("click", function(e){
-    alert("click");
+    
 });
 
 function debounce(func, delay) {

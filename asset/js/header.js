@@ -8,7 +8,7 @@ $search.addEventListener("input", debounce(function (e) {
 }, 200));
 
 $bookmark.addEventListener("click", function(e){
-    movieList = bookmarkList;
+    movieList = getBookmarkList();
     appendFlex();
 });
 

@@ -10,7 +10,7 @@ const $banner = document.querySelector("#banner");
 const $bookmark = document.querySelector("#bookmark");
 
 let movieList = [];
-let checkList = localStorage.getItem("movie");
+let checkList = window.localStorage.getItem("movie");
 let bookmarkList = JSON.parse(checkList);
 
 function appendFlex() {
@@ -103,7 +103,7 @@ function movieContent(movie) {
             alert("이미 북마크에 포함되어있습니다!");
         }
         const movieList = JSON.stringify(bookmarkList);
-        localStorage.setItem("movie", movieList);
+        window.localStorage.setItem("movie", movieList);
     });
 }
 

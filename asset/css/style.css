@@ -26,8 +26,9 @@
     width: 300px;
 }
 
-#bookmark {
-    text-align: center;
+.tooltap {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #movie-flex{

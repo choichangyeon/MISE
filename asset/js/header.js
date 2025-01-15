@@ -1,6 +1,3 @@
-const $search = document.querySelector("#search");
-const $bookmark = document.querySelector("#bookmark");
-
 $search.addEventListener("input", debounce(function (e) {
     if(e.target.value !== ""){
         searchMoive(e.target.value);
@@ -15,6 +12,10 @@ $bookmark.addEventListener("click", function(e){
     appendFlex();
 });
 
+$banner.addEventListener("click", function(){
+    location.reload(true);
+})
+
 function debounce(func, delay) {
     let timer;
     return function () {
@@ -25,7 +26,6 @@ function debounce(func, delay) {
         }, delay);
     }
 }
-
 
 async function searchMoive(word) {
     const options = {

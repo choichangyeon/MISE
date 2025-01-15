@@ -10,8 +10,13 @@ const $banner = document.querySelector("#banner");
 const $bookmark = document.querySelector("#bookmark");
 
 let movieList = [];
-let checkList = window.localStorage.getItem("movie");
-let bookmarkList = JSON.parse(checkList);
+
+function getBookmarkList() {
+    let checkList = window.localStorage.getItem("movie");
+    let bookmarkList = JSON.parse(checkList);
+
+    return (bookmarkList) ? bookmarkList : [];
+}
 
 function appendFlex() {
     $movieFlex.innerHTML = "";
@@ -94,14 +99,22 @@ function movieContent(movie) {
 
     const $bookmarkbtn = document.querySelector("#bookmarkbtn");
     $bookmarkbtn.addEventListener("click", () => {
-
-        if (!bookmarkList.some((Movie) => Movie.id === movie.id)) {
-            bookmarkList.push(movie);
-            alert("북마크 추가 완료!")
+        let bookmarkList = getBookmarkList();
+        if (bookmarkList) {
+            if (!bookmarkList.some((Movie) => Movie.id === movie.id)) {
+                bookmarkList.push(movie);
+                alert("북마크 추가 완료!");
+            }
+            else {
+                alert("이미 북마크에 포함되어있습니다!");
+            }
         }
         else {
-            alert("이미 북마크에 포함되어있습니다!");
+            bookmarkList.push(movie);
+            alert("북마크 추가 완료!");
         }
+
+
         const movieList = JSON.stringify(bookmarkList);
         window.localStorage.setItem("movie", movieList);
     });

@@ -3,10 +3,14 @@ const API_KEY = "c92adc298dc68e5356fe2191fb0b7117";
 const API_URL = "https://api.themoviedb.org/3";
 const POSTER_URL = "https://image.tmdb.org/t/p/w200";
 
+const $search = document.querySelector(".search");
+
 const $movieFlex = document.querySelector("#movie-flex");
+const $banner = document.querySelector("#banner");
+const $bookmark = document.querySelector("#bookmark");
 
 let movieList = [];
-let checkList = window.localStorage.getItem("movie");
+let checkList = localStorage.getItem("movie");
 let bookmarkList = JSON.parse(checkList);
 
 function appendFlex() {
@@ -99,7 +103,7 @@ function movieContent(movie) {
             alert("이미 북마크에 포함되어있습니다!");
         }
         const movieList = JSON.stringify(bookmarkList);
-        window.localStorage.setItem("movie", movieList);
+        localStorage.setItem("movie", movieList);
     });
 }
 

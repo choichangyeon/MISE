@@ -4,7 +4,10 @@
 }
 
 #search {
-    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    
     /* background-color: green; */
 }
 
@@ -13,8 +16,13 @@
     height: 40px;
     border-radius: 5px;
     font-size: 30px;
+    justify-self: center;
     /* background-color: grey; */
 }
+
+/* #search > img{
+    width: 250px;
+} */
 
 #bookmark {
     text-align: center;

@@ -4,7 +4,7 @@ import { showmodal } from "./exportfunc.js";
 
 //초기 화면 가져오기
 getPopular();
-//이벤트 위임을 통한 ID 함수
+//이벤트 위임을 통한 모달 창 띄우기 코드
 $movieFlex.addEventListener("click", function(e){
     const card = e.target.closest(".movie-card");
     if (!card) return;

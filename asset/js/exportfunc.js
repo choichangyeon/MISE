@@ -30,32 +30,6 @@ export function appendMain() {
     }
 
 }
-//영화 카드 함수
-function movieCard(movie) {
-    let movieName = movie.title;
-    let poster = POSTER_URL + movie.poster_path;
-    let scoreAver = movie.vote_average;
-    let id = movie.id;
-
-    let html = `
-        <div class='movie-card' id=${id}> 
-            <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
-            <h3>${movieName}</h3>
-            ${scoreAver}
-        </div>
-    `;
-    const childElement = makeDiv(html);
-
-    return childElement;
-}
-//html 코드 -> DOM 객체 함수
-function makeDiv(html) {
-    const tempElement = document.createElement('div');
-    tempElement.innerHTML = html;
-    const childElement = tempElement.firstElementChild;
-
-    return childElement;
-}
 //모달 정보 전달 함수
 export function showmodal(movieid) {
     let movieList = getMovieList();
@@ -70,8 +44,8 @@ export function showmodal(movieid) {
 
     $moviename.innerHTML = movieName;
     $movieimg.innerHTML = `<img src="${poster}" alt="포스터 이미지가 존재하지 않습니다."></img>`;
-    $overview.innerHTML = overview;
-    $etc.innerHTML = `${releaseDate} <br> ${scoreAver}`;
+    $overview.innerHTML = formatTextByPeriod(overview);
+    $etc.innerHTML = `개봉일 ${releaseDate} <br> ⭐️ ${scoreAver}`;
     $buttons.setAttribute("movieid", modalcontent.id);
 
     $modalback.style.display = "block";
@@ -124,3 +98,41 @@ $delbtn.addEventListener("click", (e) => {
         alert("북마크에 해당 영화가 없습니다!")
     }
 });
+//영화 카드 함수
+function movieCard(movie) {
+    let movieName = movie.title;
+    let poster = POSTER_URL + movie.poster_path;
+    let scoreAver = movie.vote_average;
+    let id = movie.id;
+
+    let html = `
+        <div class='movie-card' id=${id}> 
+            <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
+            <h3>${movieName}</h3>
+            ⭐️ ${scoreAver}
+        </div>
+    `;
+    const childElement = makeDiv(html);
+
+    return childElement;
+}
+//html 코드 -> DOM 객체 함수
+function makeDiv(html) {
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    const childElement = tempElement.firstElementChild;
+
+    return childElement;
+}
+//줄바꿈 함수
+function formatTextByPeriod(text) {
+    if (!text) return "";
+
+    const regex = /(?<!\([^)]*)[.!?](?=\s|$)/g;
+    const sentences = text.split(regex);
+
+    return sentences
+        .map(sentence => sentence.trim())
+        .filter(sentence => sentence.length > 0)
+        .join(".<br>");
+}

@@ -73,7 +73,7 @@
 #movie-modal {
     background-color: white;
     padding: 20px;
-    width: 70%;
+    width: 38%;
     position: fixed; 
     top: 50%; 
     left: 50%; 
@@ -81,4 +81,12 @@
     box-shadow: 15px 10px 30px 1px rgba(0, 0, 0, 1);
 
     border-radius: 8px; 
+}
+
+#moviename {
+    justify-self: center;
+}
+
+#movieimg {
+    justify-self: center;
 }

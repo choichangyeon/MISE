@@ -1,40 +1,4 @@
-function getNowPlaying() {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`
-        }
-    };
+import { getPopular } from "./api.js";
 
-    fetch(`${API_URL}/movie/now_playing?language=ko&page=1&region=KR`, options)
-        .then(res => res.json())
-        .then(res => console.log(res))
-        .catch(err => console.error(err));
-}
-
-async function getPopular() {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`
-        }
-    };
-
-    let res;
-
-    try {
-        res = await fetch(`${API_URL}/movie/popular?language=ko&page=1`, options);
-        res = await res.json();
-    }
-    catch (err) {
-        console.error(err);
-    }
-
-    movieList = res['results'];
-
-    appendFlex();
-}
-
+//초기 화면 가져오기
 getPopular();

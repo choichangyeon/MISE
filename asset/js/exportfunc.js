@@ -1,26 +1,15 @@
-const ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjOTJhZGMyOThkYzY4ZTUzNTZmZTIxOTFmYjBiNzExNyIsIm5iZiI6MTczNjMxNTk3Ny40MzI5OTk4LCJzdWIiOiI2NzdlMTQ0OWYyYzYyMTgwN2RiYjAyZDgiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.X50UgxFG-hBsW_81nxM4eW4LGKaeHWaAnJDjAeDfVHw";
-const API_KEY = "c92adc298dc68e5356fe2191fb0b7117";
-const API_URL = "https://api.themoviedb.org/3";
-const POSTER_URL = "https://image.tmdb.org/t/p/w200";
-
-const $search = document.querySelector(".search");
-
-const $movieFlex = document.querySelector("#movie-flex");
-const $banner = document.querySelector("#banner");
-const $bookmark = document.querySelector("#bookmark");
-const $upcoming = document.querySelector('#upcoming');
-
-let movieList = [];
-
-function getBookmarkList() {
+import { POSTER_URL, $movieFlex, getMovieList } from "./env.js";
+//북마크 리스트 가져오기 함수
+export function getBookmarkList() {
     let checkList = window.localStorage.getItem("movie");
     let bookmarkList = JSON.parse(checkList);
 
     return (bookmarkList) ? bookmarkList : [];
 }
-
-function appendFlex() {
+//main 영역에 띄우는 함수
+export function appendMain() {
     $movieFlex.innerHTML = "";
+    let movieList = getMovieList();
     movieList.forEach(movie => {
 
         let childElement = movieCard(movie);
@@ -33,7 +22,7 @@ function appendFlex() {
 
     });
 }
-
+//main 영역에 띄우는 영화 카드 함수
 function movieCard(movie) {
     let movieName = movie.title;
     let poster = POSTER_URL + movie.poster_path;
@@ -49,16 +38,15 @@ function movieCard(movie) {
     `;
 
     const childElement = makeDiv(html);
-
+    //모달창 열기 이벤트
     childElement.addEventListener("click", function (e) {
         e.preventDefault();
-        openMovieContent(movie);
+        movieContent(movie);
     });
 
     return childElement;
-
 }
-
+//모달창 함수
 function movieContent(movie) {
     let movieName = movie.title;
     let poster = POSTER_URL + movie.poster_path;
@@ -86,23 +74,22 @@ function movieContent(movie) {
     `;
 
     const childElement = makeDiv(html);
-
     document.body.appendChild(childElement);
-
+    //모달창 보여주기 코드
     const $dialog = document.querySelector("#movie-modal");
     $dialog.showModal();
-
+    //모달창 닫기 코드
     const $closeButton = document.querySelector("#close-modal");
     $closeButton.addEventListener("click", () => {
         $dialog.close();
         $dialog.remove();
     });
-
+    //북마크 관련 코드
     const $bookmarkbtn = document.querySelector("#bookmarkbtn");
     $bookmarkbtn.addEventListener("click", () => {
         let bookmarkList = getBookmarkList();
         if (bookmarkList) {
-            if (!bookmarkList.some((Movie) => Movie.id === movie.id)) {
+            if (!bookmarkList.some((_movie) => _movie.id === movie.id)) {
                 bookmarkList.push(movie);
                 alert("북마크 추가 완료!");
             }
@@ -114,17 +101,11 @@ function movieContent(movie) {
             bookmarkList.push(movie);
             alert("북마크 추가 완료!");
         }
-
-
         const movieList = JSON.stringify(bookmarkList);
         window.localStorage.setItem("movie", movieList);
     });
 }
-
-function openMovieContent(movie) {
-    movieContent(movie);
-}
-
+//html 코드 -> DOM 객체 함수
 function makeDiv(html) {
     const tempElement = document.createElement('div');
     tempElement.innerHTML = html;

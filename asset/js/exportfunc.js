@@ -1,5 +1,5 @@
 import {
-    POSTER_URL, $movieFlex, getMovieList, 
+    POSTER_URL, $movieFlex, getMovieList,
     $moviename, $movieimg, $overview, $etc, $modalback,
     $delbtn, $closeButton, $bookmarkbtn, $buttons
 } from "./env.js";
@@ -14,19 +14,23 @@ export function getBookmarkList() {
 export function appendMain() {
     $movieFlex.innerHTML = "";
     let movieList = getMovieList();
-    movieList.forEach(movie => {
+    if (movieList.length === 0) {
+        $movieFlex.innerText = "해당 결과가 없습니다."
+    }
+    else {
+        movieList.forEach(movie => {
+            let childElement = movieCard(movie);
+            try {
+                $movieFlex.appendChild(childElement);
+            }
+            catch (e) {
+                console.error(`ERROR:${e}`);
+            }
+        });
+    }
 
-        let childElement = movieCard(movie);
-        try {
-            $movieFlex.appendChild(childElement);
-        }
-        catch (e) {
-            console.error(`ERROR:${e}`);
-        }
-
-    });
 }
-//main 영역에 띄우는 영화 카드 함수
+//영화 카드 함수
 function movieCard(movie) {
     let movieName = movie.title;
     let poster = POSTER_URL + movie.poster_path;

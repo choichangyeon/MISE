@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MISE</title>
+    <link rel="website icon" type="jpg" href="./asset/images/MISE.png">
     <link rel="stylesheet" href="./asset/css/style.css">
 </head>
 
@@ -12,22 +13,47 @@
 <body id="page">
     <header>
         <div class="search">
-            <img id="banner" src="./asset/images/MiSE_2.jpg" alt="">
+            <img id="banner" src="./asset/images/MISE.png" alt="">
             <input type="text">
         </div>
-        <div id="bookmark">
-            북마크 탭
+        <div class="tooltap">
+            <div id="bookmark">
+                북마크 탭
+            </div>
+            <div id="upcoming">
+                곧 개봉할 예정인 영화
+            </div>
         </div>
     </header>
-    <script src="./asset/js/header.js" defer></script>
-    <main>
+    <script src="./asset/js/header.js" type="module" defer></script>
+    <main class="main">
+        <div id="modal-back">
+            <div id="movie-modal">
+                <div id="close-modal">❌</div>
+                <h1 id="moviename"></h1>
+                <div id="movieimg">
+                </div>
+                <div>
+                    <p id="etc">
+                    </p>
+                    <p id="overview">
+                    </p> 
+                </div>
+                <div id="buttons">
+                    <button id="bookmarkbtn">북마크 저장</button>
+                    <button id="delbtn">북마크 삭제</button>
+                </div>
+            </div>
+        </div>
         <div id="movie-flex">
         </div>
     </main>
-    <script src="./asset/js/main.js" defer></script>
+    <script src="./asset/js/main.js" type="module" defer></script>
     <footer>
-        풋터가 들어갈 자리
     </footer>
 </body>
-<script src="./asset/js/common.js"></script>
+<script src="./asset/js/api.js" type="module"></script>
+<script src="./asset/js/exportfunc.js" type="module"></script>
+<script src="./asset/js/env.js" type="module"></script>
+
 </html>

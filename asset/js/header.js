@@ -1,3 +1,7 @@
+import { getPopular, getUpcoming, searchMoive } from "./api.js";
+import { $search, $bookmark, $banner, $upcoming, setMovieList } from "./env.js";
+import { appendMain, getBookmarkList } from "./exportfunc.js";
+//검색창 리스너
 $search.addEventListener("input", debounce(function (e) {
     if(e.target.value !== ""){
         searchMoive(e.target.value);
@@ -6,16 +10,20 @@ $search.addEventListener("input", debounce(function (e) {
         getPopular();
     }
 }, 200));
-
-$bookmark.addEventListener("click", function(e){
-    movieList = bookmarkList;
-    appendFlex();
+//북마크 탭 리스너
+$bookmark.addEventListener("click", function(){
+    setMovieList(getBookmarkList());
+    appendMain();
 });
-
+//배너 리스너
 $banner.addEventListener("click", function(){
     location.reload(true);
 })
-
+//곧 개봉할 영화 리스너
+$upcoming.addEventListener("click", function(){
+    getUpcoming();
+})
+//디바운싱 함수
 function debounce(func, delay) {
     let timer;
     return function () {
@@ -26,30 +34,3 @@ function debounce(func, delay) {
         }, delay);
     }
 }
-
-async function searchMoive(word) {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`
-        }
-    };
-
-    let res;
-
-    try {
-        res = await fetch(`${API_URL}/search/movie?query=${word}&language=ko&page=1`, options);
-        res = await res.json();
-    }
-    catch (err) {
-        console.error(err);
-    }
-
-    // console.log(res);
-
-    movieList = res['results'];
-    appendFlex();
-
-}
-

@@ -1,40 +1,14 @@
-function getNowPlaying() {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`
-        }
-    };
+import { getPopular } from "./api.js";
+import { $movieFlex } from "./env.js";
+import { showmodal } from "./exportfunc.js";
 
-    fetch(`${API_URL}/movie/now_playing?language=ko&page=1&region=KR`, options)
-        .then(res => res.json())
-        .then(res => console.log(res))
-        .catch(err => console.error(err));
-}
-
-async function getPopular() {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${ACCESS_TOKEN}`
-        }
-    };
-
-    let res;
-
-    try {
-        res = await fetch(`${API_URL}/movie/popular?language=ko&page=1`, options);
-        res = await res.json();
-    }
-    catch (err) {
-        console.error(err);
-    }
-
-    movieList = res['results'];
-
-    appendFlex();
-}
-
+//초기 화면 가져오기
 getPopular();
+//이벤트 위임을 통한 ID 함수
+$movieFlex.addEventListener("click", function(e){
+    const card = e.target.closest(".movie-card");
+    if (!card) return;
+    const movieId = card.id;
+    console.log("클릭한 카드 ID:", movieId);
+    showmodal(movieId);
+})

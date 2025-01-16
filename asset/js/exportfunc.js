@@ -69,6 +69,7 @@ function movieContent(movie) {
                 ${scoreAver}
             </div>
             <button id="bookmarkbtn">북마크 저장</button>
+            <button id="delbtn">북마크 삭제</button>
             <button id="close-modal">닫기</button>
         </dialog>
     `;
@@ -84,8 +85,10 @@ function movieContent(movie) {
         $dialog.close();
         $dialog.remove();
     });
-    //북마크 관련 코드
+    //북마크
     const $bookmarkbtn = document.querySelector("#bookmarkbtn");
+    const $delbtn = document.querySelector("#delbtn");
+    //북마크 저장 코드
     $bookmarkbtn.addEventListener("click", () => {
         let bookmarkList = getBookmarkList();
         if (bookmarkList) {
@@ -103,6 +106,24 @@ function movieContent(movie) {
         }
         const movieList = JSON.stringify(bookmarkList);
         window.localStorage.setItem("movie", movieList);
+    });
+    //북마크 삭제 코드
+    $delbtn.addEventListener("click", () => {
+        let bookmarkList = getBookmarkList();
+        if (bookmarkList) {
+            if (bookmarkList.some((_movie) => _movie.id === movie.id)) {
+                bookmarkList = bookmarkList.filter((_movie) => _movie.id !== movie.id);
+                const movieList = JSON.stringify(bookmarkList);
+                window.localStorage.setItem("movie", movieList);
+                alert("북마크 삭제 완료!");
+            }
+            else {
+                alert("북마크에 해당 영화가 없습니다!")
+            }
+        }
+        else {
+            alert("북마크에 해당 영화가 없습니다!")
+        }
     });
 }
 //html 코드 -> DOM 객체 함수

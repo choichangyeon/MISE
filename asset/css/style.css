@@ -89,6 +89,12 @@
     border-radius: 3px;
 }
 
+.movie-card > h3 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+}
+
 .movie-card:hover{
     transform: translateY(-20px);
 }

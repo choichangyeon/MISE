@@ -48,5 +48,23 @@
     object-fit: cover;
     object-position: center;
     border-radius: 3px;
-    /* background-color: green; */
+    background-color: green;
+}
+
+#modal-back {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#movie-modal {
+    background-color: white;
+    /* margin: 15% auto; */
+    padding: 20px;
+    width: 70%;
+    position: relative;
 }

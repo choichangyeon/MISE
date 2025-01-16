@@ -14,6 +14,10 @@ export const $modalback = document.querySelector("#modal-back");
 export const $banner = document.querySelector("#banner");
 export const $bookmark = document.querySelector("#bookmark");
 export const $upcoming = document.querySelector('#upcoming');
+export const $closeButton = document.querySelector("#close-modal");
+export const $bookmarkbtn = document.querySelector("#bookmarkbtn");
+export const $delbtn = document.querySelector("#delbtn");
+export const $buttons = document.querySelector("#buttons");
 //화면에 띄울 영화 리스트 배열
 let movieList = [];
 //영화 리스트 getter

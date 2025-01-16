@@ -26,13 +26,30 @@
         </div>
     </header>
     <script src="./asset/js/header.js" type="module" defer></script>
-    <main>
+    <main class="main">
+        <div id="modal-back">
+            <div id="movie-modal">
+                <div id="close-modal">❌</div>
+                <h1 id="moviename"></h1>
+                <div id="movieimg">
+                </div>
+                <div>
+                    <p id="etc">
+                    </p>
+                    <p id="overview">
+                    </p> 
+                </div>
+                <div id="buttons">
+                    <button id="bookmarkbtn">북마크 저장</button>
+                    <button id="delbtn">북마크 삭제</button>
+                </div>
+            </div>
+        </div>
         <div id="movie-flex">
         </div>
     </main>
     <script src="./asset/js/main.js" type="module" defer></script>
     <footer>
-        풋터가 들어갈 자리
     </footer>
 </body>
 <script src="./asset/js/api.js" type="module"></script>

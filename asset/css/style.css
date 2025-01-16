@@ -16,19 +16,44 @@
     width: 500px;
     height: 40px;
     border-radius: 5px;
-    font-size: 30px;
+    font-size: 20px;
     justify-self: center;
-    margin: 10px 0 10px 0;
+    margin: 10px 0 30px 0;
     /* background-color: grey; */
 }
 
 .search > img{
+    cursor: pointer;
     width: 300px;
 }
 
 .tooltap {
+    cursor: pointer;
     display: flex;
     justify-content: space-evenly;
+    margin: 0 0 40px 0;
+    gap: 20px;
+}
+
+.tooltap > div {
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.tooltap > div::after {
+    content: ''; 
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    width: 100%;
+    height: 0; 
+    background: rgba(255, 0, 0, 0.6);
+    z-index: -1; 
+}
+
+.tooltap > div:hover::after {
+    height: 10px;
 }
 
 #movie-flex{
@@ -39,14 +64,73 @@
 }
 
 .movie-card{
+    cursor: pointer;
     width: 200px;
-    height: 400px;
+    height: 380px;
 
     padding: 10px;
-    margin: 0 10px 10px 10px;
+    margin: 0 10px 30px 10px;
+    border-style: groove;
 
+    box-shadow: 10px 10px 10px 1px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 3px;
+    transition: transform 0.1s ease;
+}
+
+.movie-card > img {
+    width: 100%; 
+    height: 300px; 
     object-fit: cover;
     object-position: center;
     border-radius: 3px;
-    /* background-color: green; */
+}
+
+.movie-card:hover{
+    transform: translateY(-20px);
+}
+
+#modal-back {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#movie-modal {
+    background-color: white;
+    padding: 20px;
+    width: 38%;
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    box-shadow: 15px 10px 30px 1px rgba(0, 0, 0, 1);
+
+    border-radius: 8px; 
+}
+
+#moviename {
+    justify-self: center;
+}
+
+#movieimg {
+    justify-self: center;
+}
+
+#close-modal {
+    cursor: pointer;
+    justify-self: end;
+}
+
+#etc {
+    font-weight:bold;
+    font-size: large; 
 }

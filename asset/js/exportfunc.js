@@ -1,4 +1,8 @@
-import { POSTER_URL, $movieFlex, getMovieList } from "./env.js";
+import {
+    POSTER_URL, $movieFlex, getMovieList,
+    $moviename, $movieimg, $overview, $etc, $modalback,
+    $delbtn, $closeButton, $bookmarkbtn, $buttons
+} from "./env.js";
 //북마크 리스트 가져오기 함수
 export function getBookmarkList() {
     let checkList = window.localStorage.getItem("movie");
@@ -10,19 +14,91 @@ export function getBookmarkList() {
 export function appendMain() {
     $movieFlex.innerHTML = "";
     let movieList = getMovieList();
-    movieList.forEach(movie => {
+    if (movieList.length === 0) {
+        $movieFlex.innerText = "해당 결과가 없습니다."
+    }
+    else {
+        movieList.forEach(movie => {
+            let childElement = movieCard(movie);
+            try {
+                $movieFlex.appendChild(childElement);
+            }
+            catch (e) {
+                console.error(`ERROR:${e}`);
+            }
+        });
+    }
 
-        let childElement = movieCard(movie);
-        try {
-            $movieFlex.appendChild(childElement);
-        }
-        catch (e) {
-            console.error(`ERROR:${e}`);
-        }
-
-    });
 }
-//main 영역에 띄우는 영화 카드 함수
+//모달 정보 전달 함수
+export function showmodal(movieid) {
+    let movieList = getMovieList();
+    let modalcontent = movieList.find(movie => movie.id == movieid);
+
+    let movieName = modalcontent.title;
+    let poster = POSTER_URL + modalcontent.poster_path;
+    let scoreAver = modalcontent.vote_average;
+    let releaseDate = modalcontent.release_date;
+    let overview = modalcontent.overview;
+
+
+    $moviename.innerHTML = movieName;
+    $movieimg.innerHTML = `<img src="${poster}" alt="포스터 이미지가 존재하지 않습니다."></img>`;
+    $overview.innerHTML = formatTextByPeriod(overview);
+    $etc.innerHTML = `개봉일 ${releaseDate} <br> ⭐️ ${scoreAver}`;
+    $buttons.setAttribute("movieid", modalcontent.id);
+
+    $modalback.style.display = "block";
+}
+//모달창 닫기 코드
+$closeButton.addEventListener("click", () => {
+    $modalback.style.display = "none";
+});
+//북마크 저장 코드
+$bookmarkbtn.addEventListener("click", (e) => {
+    var temp = e.target.parentElement;
+    const movieId = temp.getAttribute("movieid");
+    let bookmarkList = getBookmarkList();
+    let movies = getMovieList();
+
+    if (bookmarkList) {
+        if (!bookmarkList.some((_movie) => _movie.id == movieId)) {
+            bookmarkList.push(movies.find((_movie) => _movie.id == movieId));
+            alert("북마크 추가 완료!");
+        }
+        else {
+            alert("이미 북마크에 포함되어있습니다!");
+        }
+    }
+    else {
+        bookmarkList.push(movies.find((_movie) => _movie.id == movieId));
+        alert("북마크 추가 완료!");
+    }
+    const movieList = JSON.stringify(bookmarkList);
+    window.localStorage.setItem("movie", movieList);
+});
+//북마크 삭제 코드
+$delbtn.addEventListener("click", (e) => {
+    var temp = e.target.parentElement;
+    const movieId = temp.getAttribute("movieid");
+    let bookmarkList = getBookmarkList();
+
+    if (bookmarkList) {
+        if (bookmarkList.some((_movie) => _movie.id == movieId)) {
+            bookmarkList = bookmarkList.filter((_movie) => _movie.id != movieId);
+            const movieList = JSON.stringify(bookmarkList);
+            window.localStorage.setItem("movie", movieList);
+            alert("북마크 삭제 완료!");
+        }
+        else {
+            alert("북마크에 해당 영화가 없습니다!")
+        }
+    }
+    else {
+        alert("북마크에 해당 영화가 없습니다!")
+    }
+});
+//영화 카드 함수
 function movieCard(movie) {
     let movieName = movie.title;
     let poster = POSTER_URL + movie.poster_path;
@@ -33,98 +109,12 @@ function movieCard(movie) {
         <div class='movie-card' id=${id}> 
             <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
             <h3>${movieName}</h3>
-            ${scoreAver}
+            ⭐️ ${scoreAver}
         </div>
     `;
-
     const childElement = makeDiv(html);
-    //모달창 열기 이벤트
-    childElement.addEventListener("click", function (e) {
-        e.preventDefault();
-        movieContent(movie);
-    });
 
     return childElement;
-}
-//모달창 함수
-function movieContent(movie) {
-    let movieName = movie.title;
-    let poster = POSTER_URL + movie.poster_path;
-    let scoreAver = movie.vote_average;
-    let releaseDate = movie.release_date;
-    let overview = movie.overview;
-
-    let html = `
-        <dialog id="movie-modal">
-            <h1>${movieName}</h1>
-            <div>
-                <img src="${poster}" alt="포스터 이미지가 존재하지 않습니다.">
-            </div>
-            <div>
-                <p>
-                    ${overview}
-                </p>
-                ${releaseDate}
-                <br>
-                ${scoreAver}
-            </div>
-            <button id="bookmarkbtn">북마크 저장</button>
-            <button id="delbtn">북마크 삭제</button>
-            <button id="close-modal">닫기</button>
-        </dialog>
-    `;
-
-    const childElement = makeDiv(html);
-    document.body.appendChild(childElement);
-    //모달창 보여주기 코드
-    const $dialog = document.querySelector("#movie-modal");
-    $dialog.showModal();
-    //모달창 닫기 코드
-    const $closeButton = document.querySelector("#close-modal");
-    $closeButton.addEventListener("click", () => {
-        $dialog.close();
-        $dialog.remove();
-    });
-    //북마크
-    const $bookmarkbtn = document.querySelector("#bookmarkbtn");
-    const $delbtn = document.querySelector("#delbtn");
-    //북마크 저장 코드
-    $bookmarkbtn.addEventListener("click", () => {
-        let bookmarkList = getBookmarkList();
-        if (bookmarkList) {
-            if (!bookmarkList.some((_movie) => _movie.id === movie.id)) {
-                bookmarkList.push(movie);
-                alert("북마크 추가 완료!");
-            }
-            else {
-                alert("이미 북마크에 포함되어있습니다!");
-            }
-        }
-        else {
-            bookmarkList.push(movie);
-            alert("북마크 추가 완료!");
-        }
-        const movieList = JSON.stringify(bookmarkList);
-        window.localStorage.setItem("movie", movieList);
-    });
-    //북마크 삭제 코드
-    $delbtn.addEventListener("click", () => {
-        let bookmarkList = getBookmarkList();
-        if (bookmarkList) {
-            if (bookmarkList.some((_movie) => _movie.id === movie.id)) {
-                bookmarkList = bookmarkList.filter((_movie) => _movie.id !== movie.id);
-                const movieList = JSON.stringify(bookmarkList);
-                window.localStorage.setItem("movie", movieList);
-                alert("북마크 삭제 완료!");
-            }
-            else {
-                alert("북마크에 해당 영화가 없습니다!")
-            }
-        }
-        else {
-            alert("북마크에 해당 영화가 없습니다!")
-        }
-    });
 }
 //html 코드 -> DOM 객체 함수
 function makeDiv(html) {
@@ -133,4 +123,16 @@ function makeDiv(html) {
     const childElement = tempElement.firstElementChild;
 
     return childElement;
+}
+//줄바꿈 함수
+function formatTextByPeriod(text) {
+    if (!text) return "";
+
+    const regex = /(?<!\([^)]*)[.!?](?=\s|$)/g;
+    const sentences = text.split(regex);
+
+    return sentences
+        .map(sentence => sentence.trim())
+        .filter(sentence => sentence.length > 0)
+        .join(".<br>");
 }
